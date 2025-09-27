@@ -1,0 +1,187 @@
+Markdown
+
+# Masterplan do Projeto: Big Trader
+
+## 1. Visão Geral e Missão
+
+**Nome do Projeto:** Big Trader
+
+**Missão:** Criar uma plataforma de trading automatizado de alta performance para a IQ Option. O "Big Trader" utilizará um sistema de análise avançado, combinando um conjunto de indicadores técnicos customizados com uma IA (GPT-5), para identificar e executar operações com alta precisão nos mercados de Opções Binárias, Digitais e OTC. O objetivo é remover o fator emocional do trading, economizar tempo do usuário e potencializar a consistência dos resultados.
+
+**Problema Resolvido:** A complexidade, a necessidade de monitoramento constante e a disciplina emocional exigidas no trading manual. O Big Trader oferece uma solução "set-and-forget" (configure e esqueça), apoiada por uma lógica de estratégia bem definida.
+
+## 2. Público-Alvo
+
+O público primário são traders com algum nível de experiência que já compreendem os riscos e as dinâmicas do mercado, mas buscam otimizar suas operações. Eles valorizam tempo, precisão e automação, e desejam uma ferramenta robusta para executar estratégias de forma sistemática.
+
+## 3. Proposta de Valor
+
+* **Automação Inteligente:** Execução de trades baseada em uma lógica de confluência de múltiplos indicadores, removendo a necessidade de análise manual constante.
+* **Controle Total:** O usuário mantém o controle sobre os parâmetros essenciais (gestão de risco, ativos, valores) e pode operar manualmente se desejar.
+* **Flexibilidade de Mercado:** Suporte completo para os mercados mais populares da IQ Option (Binárias, Digital, OTC).
+* **Interface Intuitiva:** Um painel de controle moderno e de fácil utilização, acessível via Web e Mobile, para monitorar a performance de qualquer lugar.
+* **Performance Consistente:** O uso de uma estratégia bem definida e executada sem emoção visa gerar resultados mais estáveis a longo prazo.
+
+## 4. Objetivos de Negócio
+
+* **MVP (Produto Mínimo Viável):** Lançar a primeira versão funcional com o painel web, o robô operando com os 3 indicadores definidos e suporte ao modo automático.
+* **Crescimento:** Adquirir uma base de usuários beta para coletar feedback e refinar a estratégia e a plataforma.
+* **Expansão (Futuro):** Explorar a implementação de novas estratégias, integração com sistemas de alerta (Telegram) e um possível modelo de assinatura (SaaS).
+
+
+implementation-plan.md
+# Plano de Implementação: Big Trader
+
+## Fase 1: Fundação e Backend (Semanas 1-4)
+
+* **[TAREFA] Ambiente e Hospedagem:** Definir e configurar o ambiente de desenvolvimento e a infraestrutura de hospedagem (a ser definida: AWS, Vercel, etc.).
+* **[TAREFA] Integração com API IQ Option:** Desenvolver o módulo central de comunicação via WebSocket com a API não oficial da IQ Option.
+    * Implementar funções de autenticação, checagem de saldo, e seleção de conta (Real/Prática).
+    * Implementar as funções de `buy`, `close_position`, `change_order`.
+* **[TAREFA] Coleta de Dados:** Criar o serviço que utiliza `get_candles` e `start_candles_one_stream` para obter e armazenar dados de mercado em tempo real.
+* **[TAREFA] Lógica dos Indicadores:**
+    * Implementar em código a lógica matemática dos três indicadores customizados (BO indicator, CCC, S&R).
+    * Garantir que os indicadores processem os dados de velas recebidos e gerem os sinais (`pu`/`pd`) corretamente.
+
+## Fase 2: Core do Robô e UI/UX (Semanas 5-8)
+
+* **[TAREFA] Motor de Decisão:** Desenvolver o módulo que integra a saída dos indicadores para tomar a decisão de trade (executar compra/venda). A integração com GPT-5 será planejada aqui, podendo começar com a lógica dos indicadores e depois ser refinada pela IA.
+* **[TAREFA] Design da Interface (UI/UX):** Criar os wireframes e o design visual final para o painel web e mobile, seguindo as diretrizes de design (futurista, preto/verde).
+* **[TAREFA] Desenvolvimento do Frontend (Web):** Iniciar o desenvolvimento do painel web.
+    * Tela de Login/Conexão.
+    * Dashboard principal para visualização de saldo e P/L.
+* **[TAREFA] Banco de Dados:** Modelar e implementar o banco de dados para armazenar histórico de trades, configurações de usuário e relatórios de performance.
+
+## Fase 3: Funcionalidades e Testes (Semanas 9-12)
+
+* **[TAREFA] Frontend (Web - Continuação):**
+    * Implementar a tela de configuração de estratégia (ativos, risco, etc.).
+    * Implementar a tela de relatórios e histórico.
+    * Implementar o modo de trade manual.
+* **[TAREFA] Desenvolvimento Mobile:** Iniciar o desenvolvimento do aplicativo mobile, reaproveitando a lógica de backend. Foco em visualização e configurações rápidas.
+* **[TAREFA] Testes Integrados:** Conectar o frontend ao backend e iniciar testes ponta a ponta em conta de demonstração.
+    * Verificar a execução de ordens.
+    * Validar os dados exibidos no dashboard.
+    * Testar a performance e estabilidade do robô.
+
+## Fase 4: Lançamento Beta e Refinamento (Pós-Semana 12)
+
+* **[TAREFA] Deploy:** Publicar a aplicação web e o app mobile (se pronto) em ambiente de produção.
+* **[TAREFA] Lançamento Beta:** Convidar um grupo fechado de usuários para testar a plataforma em ambiente real.
+* **[TAREFA] Coleta de Feedback:** Coletar feedback sobre usabilidade, performance do robô e bugs.
+* **[TAREFA] Otimização:** Iterar sobre o feedback para corrigir problemas e otimizar a estratégia dos indicadores.
+
+## Stack Tecnológica Sugerida
+
+* **Backend:** Python (com a biblioteca `iqoptionapi`) ou Node.js.
+* **Frontend Web:** React ou Vue.js.
+* **Frontend Mobile:** React Native ou Flutter (para reuso de código).
+* **Banco de Dados:** PostgreSQL ou MongoDB.
+
+design-guidelines.md
+
+# Guia Visual e de UX: Big Trader
+
+## 1. Filosofia de Design
+
+O design do Big Trader deve ser **moderno, eficiente e inspirar confiança**. A interface deve ser limpa, focada em dados e evitar distrações, permitindo que o usuário absorva informações críticas rapidamente. A sensação deve ser a de estar no controle de uma ferramenta de alta tecnologia.
+
+## 2. Paleta de Cores
+
+* **Primária (Fundo):** Preto ou Cinza Muito Escuro (`#0A0A0A` ou `#121212`). Cria um ambiente focado e reduz o cansaço visual.
+* **Secundária (Destaque Principal):** Verde Vibrante (`#00FF00` ou um verde-limão como `#39FF14`). Usado para elementos de ação (botões), lucros, gráficos de alta, e ícones importantes. Pode ter um leve efeito de "glow" (brilho).
+* **Cor de Perda/Atenção:** Vermelho Vibrante (`#FF0000` ou `#FF1744`). Usado para perdas, alertas negativos e ações de cancelamento.
+* **Texto Principal:** Branco ou Cinza Claro (`#FFFFFF` ou `#E0E0E0`).
+* **Texto Secundário/Labels:** Cinza Médio (`#888888`).
+
+## 3. Tipografia
+
+* **Fonte Principal:** Uma fonte sans-serif moderna e com boa legibilidade, como **Inter**, **Roboto Mono** ou **Source Code Pro**. A escolha de uma fonte monoespaçada para números pode reforçar a estética de "terminal de dados".
+* **Hierarquia:** Utilizar diferentes pesos (Regular, Medium, Bold) e tamanhos para criar uma hierarquia visual clara entre títulos, subtítulos e dados.
+
+## 4. Componentes e Estilo
+
+* **Botões:** Estilo "flat" ou com gradientes sutis. Botões de ação primária devem usar a cor de destaque (verde).
+* **Cards e Painéis:** Usar bordas sutis ou sombras com a cor de destaque para separar seções, dando uma aparência "flutuante" e organizada.
+* **Gráficos:** Devem ser o ponto focal do dashboard. Usar a paleta de cores definida, com linhas limpas e claras. Ações de alta em verde, baixa em vermelho.
+* **Ícones:** Utilizar um conjunto de ícones minimalistas e consistentes, com o mesmo estilo "futurista".
+* **Efeitos e Microinterações:**
+    * **Hover:** Leves mudanças de cor ou brilho em botões e elementos interativos.
+    * **Loading:** Animações de loading sutis e tecnológicas.
+    * **Atualização de Dados:** Um "flash" sutil de cor verde (lucro) ou vermelho (prejuízo) quando os números do dashboard são atualizados em tempo real.
+
+## 5. Referências Visuais
+
+* Plataformas de trading modernas (com tema escuro).
+* Interfaces de filmes de ficção científica (Sci-Fi UI).
+* Dashboards de análise de dados com foco em tempo real.
+
+app-flow-pages-and-roles.md
+
+# Fluxo do App, Páginas e Papéis: Big Trader
+
+## 1. Papéis de Usuário
+
+* **Trader (Usuário Padrão):** O único papel no sistema. O usuário tem acesso completo à sua própria conta, configurações e dados. Não há papel de administrador do ponto de vista do cliente.
+
+## 2. Fluxo Principal do Usuário
+
+1.  **Cadastro/Onboarding:** O usuário acessa a plataforma pela primeira vez.
+2.  **Conexão:** O usuário é direcionado para a página de Conexão, onde insere suas credenciais da IQ Option.
+3.  **Configuração Inicial:** Após a conexão, um guia rápido pode aparecer para ajudá-lo a fazer a primeira configuração do robô (selecionar um ativo, definir o valor de entrada, etc.).
+4.  **Monitoramento:** O usuário acessa o Dashboard para acompanhar a performance do robô e o saldo da conta.
+5.  **Ajuste:** O usuário navega para a página de Configurações para ajustar os parâmetros da estratégia conforme sua necessidade.
+6.  **Análise:** O usuário acessa a página de Histórico para analisar a performance passada e tomar decisões sobre ajustes futuros.
+7.  **Logout:** O usuário encerra sua sessão de forma segura.
+
+## 3. Estrutura de Páginas/Telas
+
+### Plataforma Web e Mobile (Estrutura Similar)
+
+* **1. Página de Login / Conexão**
+    * **Função:** Ponto de entrada seguro.
+    * **Componentes:** Campos para email e senha da IQ Option, botão "Conectar", link para a IQ Option, avisos de segurança.
+
+* **2. Dashboard (Página Principal)**
+    * **Função:** Visão geral e em tempo real da operação.
+    * **Componentes:**
+        * Card de Saldo (Real/Prática).
+        * Card de Lucro/Prejuízo (P/L) do dia/semana/mês.
+        * Status do Robô (Ativo/Inativo).
+        * Tabela/Lista de "Operações em Andamento".
+        * Gráfico principal mostrando a evolução do capital ou a performance de um ativo.
+        * Botão de "Parada de Emergência" para desligar o robô rapidamente.
+
+* **3. Página de Configurações da Estratégia**
+    * **Função:** Onde o usuário define como o robô deve operar.
+    * **Componentes:**
+        * Seleção de Ativos (multi-seleção de pares de moedas, etc.).
+        * Seleção de Mercados (Binárias, Digital, OTC).
+        * Input para Valor de Entrada.
+        * Inputs para Gerenciamento de Risco (Stop Loss, Stop Gain, Take Profit).
+        * Configuração de Martingale (se aplicável, com opções de níveis).
+        * Seleção de Timeframe das Velas (M1, M5, M15).
+        * Botão "Salvar Configurações".
+
+* **4. Página de Trade Manual**
+    * **Função:** Permitir que o usuário opere por conta própria.
+    * **Componentes:**
+        * Gráfico do ativo selecionado (com os indicadores customizados plotados).
+        * Botões de Compra (CALL) e Venda (PUT).
+        * Seleção de tempo de expiração.
+        * Input de valor.
+
+* **5. Página de Histórico e Relatórios**
+    * **Função:** Análise de performance passada.
+    * **Componentes:**
+        * Tabela detalhada de todas as operações fechadas (ativo, data, valor, resultado).
+        * Filtros por data, ativo e mercado.
+        * Estatísticas de performance (Taxa de acerto (Winrate), Lucro total, Drawdown).
+
+* **6. Página de Perfil/Conta**
+    * **Função:** Gerenciamento da conta do usuário na plataforma.
+    * **Componentes:**
+        * Informações do usuário.
+        * Botão para Desconectar da IQ Option.
+        * Configurações de tema (claro/escuro, se disponível).
+        
